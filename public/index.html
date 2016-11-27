@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
+	<script>
+		var app = angular.module('app', ['ngRoute']);
+
+		app.controller('HomeController', function($http){
+			var vm = this;
+
+			vm.trafficlist = [];
+
+			vm.detailedTraffic;
+
+			vm.showDetails = function(traffic){
+				vm.detailedTraffic = traffic;
+				vm.detailed = true;
+			};
+
+			vm.getTrafficlist = function(){
+				$http.get('/api/trafficlist').then(function(response){
+					vm.trafficlist = response.data;
+				});
+			};
+			vm.getTrafficlist();
+
+			vm.updateTraffic = function(traffic){
+				if(traffic){
+					$http.put('/api/trafficlist', traffic).then(function(response){
+						console.log('updated traffic');
+						vm.getTrafficlist();
+					})
+				}
+			};
+
+			vm.removeTraffic = function(traffic){
+				console.log(traffic);
+				if(traffic){
+					$http.delete('/api/trafficlist/' + traffic._id).then(function(response){
+						vm.getTrafficlist();
+					});
+				}
+			};
+
+
+			vm.addTraffic = function(traffic){
+				if(traffic && traffic.density && traffic.interval){
+					console.log('about to create traffic');
+
+					$http.post('/api/trafficlist', traffic).then(function(response){
+						vm.getTrafficlist();
+						vm.traffic = '';
+						vm.addtraffic = false;
+					});
+
+				}
+				else {
+					console.log('You have not supplied enough details..');
+				}
+			};
+
+
+			return true;
+		});
+
+		app.config(function($routeProvider) {
+
+			$routeProvider.when('/', {
+				controller: 'HomeController',
+				controllerAs: 'vm',
+				templateUrl: './home.html'
+			});
+			$routeProvider.otherwise('/');
+
+		});
+
+	</script>
+	<meta charset="UTF-8">
+	<title>Just a T.A.D. Database</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div ng-view></div>
+			</div>
+		</div>
+	</div>
+</body>	
+</html>
