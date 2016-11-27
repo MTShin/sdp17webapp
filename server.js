@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-var db = "mongodb://localhost/justatad_db";
+var db = "mongodb://sdp17:sdp17@ds111798.mlab.com:11798/justatad_db";
 
 mongoose.connect(db, function(err, response){
 	if(err){
