@@ -24,12 +24,13 @@
 				</td>
 			</tr>
 		</table>
-		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true ||vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add A Traffic Data Point</button>
+		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add A Traffic Data Point</button>
+		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.getTrafficlist();" onclick="this.blur();">Update</button>
 	</div>
 	<div class="container create-trafficlist" ng-hide="!vm.addtraffic">
 		<div class="form-group">
 			<label for="density">Density</label>
-			<input required type="text" id="density" class="form-control" style="width:300px;" ng-model="vm.traffic.density"> 
+			<input required type="number" id="density" class="form-control" style="width:300px;" ng-model="vm.traffic.density">
 		</div>
 		<div class="form-group">
 			<label for="density">Interval</label>
