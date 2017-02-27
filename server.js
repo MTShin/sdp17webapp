@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var db = "mongodb://sdp17:sdp17@ds111798.mlab.com:11798/justatad_db";
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect(db, function(err, response){
 	if(err){
 		console.log('Failed to connected to ' + db);
@@ -76,8 +78,6 @@ router.put('/api/trafficlist', function(request, response){
 	})
 
 });
-
-
 
 // POST
 

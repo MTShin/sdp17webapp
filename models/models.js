@@ -11,7 +11,7 @@ var TrafficlistSchema = new Schema({
 		type:  Number, 
 		required: true 
 	}
-});
+}, {timestamps: true});
 
 var model = mongoose.model('Trafficlist', TrafficlistSchema);
 

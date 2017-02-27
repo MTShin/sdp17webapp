@@ -5,16 +5,20 @@
 		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
 			<th>Density</th>
 			<th>Interval</th>
+			<th>Created At</th>
 			<th>Actions</th>
 			<tr ng-repeat="traffic in vm.trafficlist">
 				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
 				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt}}</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="traffic.density" class="form-control" style="width:100px;">
 				</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="traffic.interval" class="form-control" style="width:100px;">
-
+				</td>
+				<td ng-if="editing">
+					<input type="text" ng-model="traffic.createdAt" class="form-control" style="width:100px;">
 				</td>
 				<td>
 					<button ng-hide="editing" class="btn btn-warning" ng-click="editing=!editing">Edit</button>
@@ -24,7 +28,7 @@
 				</td>
 			</tr>
 		</table>
-		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add A Traffic Data Point</button>
+		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add Traffic Data</button>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.getTrafficlist();" onclick="this.blur();">Update</button>
 	</div>
 	<div class="container create-trafficlist" ng-hide="!vm.addtraffic">
@@ -42,7 +46,7 @@
 	<div class="container details-container" ng-if="vm.detailed === true">
 		<div class="jumbotron">
 			<div class="close" style="font-size: 50px; color: black" ng-click="vm.detailed=false;">X</div>
-			<h3>You are viewing the details of Traffic #{{vm.detailedTraffic._id}}</h3>
+			<h3>Traffic ID: {{vm.detailedTraffic._id}}</h3>
 			<h3>Density: {{vm.detailedTraffic.density}}</h3>
 			<h3>Interval: {{vm.detailedTraffic.interval}}</h3>
 		</div>

@@ -8,7 +8,7 @@
 	<script>
 		var app = angular.module('app', ['ngRoute']);
 
-		app.controller('HomeController', function($http){
+		app.controller('HomeController', function($http, $interval){
 			var vm = this;
 
 			vm.trafficlist = [];
@@ -25,7 +25,11 @@
 					vm.trafficlist = response.data;
 				});
 			};
+
 			vm.getTrafficlist();
+
+            //interval update
+            $interval(vm.getTrafficlist,5000);
 
 			vm.updateTraffic = function(traffic){
 				if(traffic){
