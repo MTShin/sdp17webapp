@@ -5,10 +5,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
-	<script src="ng-table-to-csv/dist/ng-table-to-csv.js"></script>
+	<script src="/scripts/ng-table-to-csv/dist/ng-table-to-csv.js"></script>
+	<script src="/scripts/angular-tablesort/js/angular-tablesort.js"></script>
 
 	<script>
-		var app = angular.module('app', ['ngRoute','ngTableToCsv']);
+		var app = angular.module('app', ['ngRoute','ngTableToCsv','tableSort']);
 
 		app.controller('HomeController', function($http, $interval){
 			var vm = this;
@@ -71,6 +72,24 @@
 
 			return true;
 		});
+
+        app.filter("myfilter", function() {
+            return function(items, from, to) {
+                var df = from;
+                var dt =to;
+                var result = [];
+
+                for (var i=0; i<items.length; i++){
+                    var date = new Date(items[i].invoice_date);
+                    date.setDate(date.getDate() + parseInt(items[i].terms));
+                    var tf = date;
+                    if (tf > df && tf < dt)  {
+                        result.push(items[i]);
+                    }
+                }
+                return result;
+            };
+        });
 
 		app.config(function($routeProvider) {
 

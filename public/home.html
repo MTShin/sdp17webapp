@@ -2,15 +2,23 @@
 	<h1>{{vm.title}}</h1>
 
 	<div class="container trafficlist-container">
-		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator="	">
-			<th>Density</th>
-			<th>Interval</th>
-			<th>Created At</th>
+		<div class="form-group">
+			<label >Filter by Density:</label>
+			<input type="text" ng-model="search.traffic.density" class="form-control" placeholder="Density">
+		</div>
+		<div class="form-group">
+			<label >Filter by Interval:</label>
+			<input type="text" ng-model="search.traffic.interval" class="form-control" placeholder="Interval">
+		</div>
+		<table ts-wrapper class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator="	">
+			<th ts-criteria="density|parseFloat" style="cursor: pointer">Density</th>
+			<th ts-criteria="interval|parseFloat" style="cursor: pointer">Interval</th>
+			<th ts-criteria="createdAt|parseDate" style="cursor: pointer">Created At</th>
 			<th>Actions</th>
-			<tr ng-repeat="traffic in vm.trafficlist">
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt | date:'short'}}</td>
+			<tr ng-repeat="traffic in vm.trafficlist | filter:{density: search.traffic.density, interval: search.traffic.interval}" ts-repeat ts-hide-no-data>
+				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
+				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
+				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt | date:'short'}}</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="traffic.density" class="form-control" style="width:100px;">
 				</td>
