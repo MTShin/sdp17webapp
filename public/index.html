@@ -73,24 +73,6 @@
 			return true;
 		});
 
-        app.filter("myfilter", function() {
-            return function(items, from, to) {
-                var df = from;
-                var dt =to;
-                var result = [];
-
-                for (var i=0; i<items.length; i++){
-                    var date = new Date(items[i].invoice_date);
-                    date.setDate(date.getDate() + parseInt(items[i].terms));
-                    var tf = date;
-                    if (tf > df && tf < dt)  {
-                        result.push(items[i]);
-                    }
-                }
-                return result;
-            };
-        });
-
 		app.config(function($routeProvider) {
 
 			$routeProvider.when('/', {
