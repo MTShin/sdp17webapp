@@ -2,7 +2,7 @@
 	<h1>{{vm.title}}</h1>
 
 	<div class="container trafficlist-container">
-		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
+		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator=";">
 			<th>Density</th>
 			<th>Interval</th>
 			<th>Created At</th>
@@ -10,7 +10,7 @@
 			<tr ng-repeat="traffic in vm.trafficlist">
 				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
 				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt}}</td>
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt | date:'short'}}</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="traffic.density" class="form-control" style="width:100px;">
 				</td>
@@ -18,7 +18,7 @@
 					<input type="text" ng-model="traffic.interval" class="form-control" style="width:100px;">
 				</td>
 				<td ng-if="editing">
-					<input type="text" ng-model="traffic.createdAt" class="form-control" style="width:100px;">
+					<input type="text" ng-model="traffic.createdAt | date:'short'" class="form-control" style="width:100px;">
 				</td>
 				<td>
 					<button ng-hide="editing" class="btn btn-warning" ng-click="editing=!editing">Edit</button>
@@ -30,6 +30,10 @@
 		</table>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add Traffic Data</button>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.getTrafficlist();" onclick="this.blur();">Update</button>
+		<a class="btn btn-primary btn-md" title="Export Table" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="csv.generate()" ng-href="{{ csv.link() }}"
+		   download="myTable.csv" onclick="this.blur();">
+			<i class="glyphicon glyphicon-new-window"></i> Export as CSV
+		</a>
 	</div>
 	<div class="container create-trafficlist" ng-hide="!vm.addtraffic">
 		<div class="form-group">
@@ -49,6 +53,7 @@
 			<h3>Traffic ID: {{vm.detailedTraffic._id}}</h3>
 			<h3>Density: {{vm.detailedTraffic.density}}</h3>
 			<h3>Interval: {{vm.detailedTraffic.interval}}</h3>
+			<h3>Created At: {{vm.detailedTraffic.createdAt | date:'short'}}</h3>
 		</div>
 	</div>
 
