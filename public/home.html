@@ -2,7 +2,7 @@
 	<h1>{{vm.title}}</h1>
 
 	<div class="container trafficlist-container">
-		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator=";">
+		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator="	">
 			<th>Density</th>
 			<th>Interval</th>
 			<th>Created At</th>
@@ -31,7 +31,7 @@
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add Traffic Data</button>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.getTrafficlist();" onclick="this.blur();">Update</button>
 		<a class="btn btn-primary btn-md" title="Export Table" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="csv.generate()" ng-href="{{ csv.link() }}"
-		   download="myTable.csv" onclick="this.blur();">
+		   download="justatad.csv" onclick="this.blur();">
 			<i class="glyphicon glyphicon-new-window"></i> Export as CSV
 		</a>
 	</div>
