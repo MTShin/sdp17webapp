@@ -2,40 +2,42 @@
 	<h1>{{vm.title}}</h1>
 
 	<div class="container trafficlist-container">
-		<div class="form-group">
+		<div class="form-group" style="height: 7%; width: 100%;">
 			<label >Filter by Density:</label>
 			<input type="text" ng-model="search.traffic.density" class="form-control" placeholder="Density">
 		</div>
-		<div class="form-group">
+		<div class="form-group" style="height: 7%; width: 100%;">
 			<label >Filter by Interval:</label>
 			<input type="text" ng-model="search.traffic.interval" class="form-control" placeholder="Interval">
 		</div>
-		<table ts-wrapper class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator="	">
-			<th ts-criteria="density|parseFloat" style="cursor: pointer">Density</th>
-			<th ts-criteria="interval|parseFloat" style="cursor: pointer">Interval</th>
-			<th ts-criteria="createdAt|parseDate" style="cursor: pointer">Created At</th>
-			<th>Actions</th>
-			<tr ng-repeat="traffic in vm.trafficlist | filter:{density: search.traffic.density, interval: search.traffic.interval}" ts-repeat ts-hide-no-data>
-				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
-				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
-				<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt | date:'short'}}</td>
-				<td ng-if="editing">
-					<input type="text" ng-model="traffic.density" class="form-control" style="width:100px;">
-				</td>
-				<td ng-if="editing">
-					<input type="text" ng-model="traffic.interval" class="form-control" style="width:100px;">
-				</td>
-				<td ng-if="editing">
-					<input type="text" ng-model="traffic.createdAt | date:'short'" class="form-control" style="width:100px;">
-				</td>
-				<td>
-					<button ng-hide="editing" class="btn btn-warning" ng-click="editing=!editing">Edit</button>
-					<button ng-hide="!editing" class="btn btn-success" ng-click="vm.updateTraffic(traffic);editing=false;">Save</button>
-					<button class="btn btn-primary" ng-hide="!editing"  ng-click="editing=!editing">Back</button>
-					<button class="btn btn-danger" ng-hide="editing" ng-click="vm.removeTraffic(traffic);">Delete</button>
-				</td>
-			</tr>
-		</table>
+		<div class="form-group" id="table" style="overflow: auto; height: 70%; width: 100%;">
+			<table ts-wrapper class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed" export-csv="csv" separator="	">
+				<th ts-criteria="density|parseFloat" style="cursor: pointer">Density</th>
+				<th ts-criteria="interval|parseFloat" style="cursor: pointer">Interval</th>
+				<th ts-criteria="createdAt|parseDate" style="cursor: pointer">Created At</th>
+				<th>Actions</th>
+				<tr ng-repeat="traffic in vm.trafficlist | filter:{density: search.traffic.density, interval: search.traffic.interval}" ts-repeat ts-hide-no-data>
+					<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.density}}</td>
+					<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.interval}}</td>
+					<td style="cursor: pointer" ng-if="!editing" ng-click="vm.showDetails(traffic)">{{traffic.createdAt | date:'short'}}</td>
+					<td ng-if="editing">
+						<input type="text" ng-model="traffic.density" class="form-control" style="width:100px;">
+					</td>
+					<td ng-if="editing">
+						<input type="text" ng-model="traffic.interval" class="form-control" style="width:100px;">
+					</td>
+					<td ng-if="editing">
+						<input type="text" ng-model="traffic.createdAt | date:'short'" class="form-control" style="width:100px;">
+					</td>
+					<td>
+						<button ng-hide="editing" class="btn btn-warning" ng-click="editing=!editing">Edit</button>
+						<button ng-hide="!editing" class="btn btn-success" ng-click="vm.updateTraffic(traffic);editing=false;">Save</button>
+						<button class="btn btn-primary" ng-hide="!editing"  ng-click="editing=!editing">Back</button>
+						<button class="btn btn-danger" ng-hide="editing" ng-click="vm.removeTraffic(traffic);">Delete</button>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.addtraffic=!vm.addtraffic">Add Traffic Data</button>
 		<button class="btn btn-primary btn-md" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="vm.getTrafficlist();" onclick="this.blur();">Update</button>
 		<a class="btn btn-primary btn-md" title="Export Table" ng-hide="vm.detailed === true || vm.addtraffic == true;" ng-click="csv.generate()" ng-href="{{ csv.link() }}"
