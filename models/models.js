@@ -8,8 +8,8 @@ var TrafficlistSchema = new Schema({
 		required: true
 	},
 	interval: {
-		type:  Number, 
-		required: true 
+		type: Number,
+		required: true
 	}
 }, {timestamps: true});
 
